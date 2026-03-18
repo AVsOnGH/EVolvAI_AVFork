@@ -1,99 +1,91 @@
-# EVolvAI: Generative Counterfactual Framework
+# EVolvAI — Generative Counterfactual Framework
 
-## Overview
-This repository contains the core deep learning architecture for the **Generative Counterfactual Framework** – a component of the EVolvAI project.
+**Sujay's module** within the Spatio-Temporal EV Infrastructure Optimizer project.
 
-Traditional power systems forecasting relies on deterministic predictions from historical data (LSTMs, RNNs). These cannot extrapolate to extreme "what-if" scenarios necessary for grid resilience planning.
-
-This module bridges that gap by combining **Temporal Convolutional Networks (TCNs)** with a **Variational Autoencoder (VAE)** and **intervention-based latent conditioning**. The system generates realistic 24-hour demand profiles mapped to physical grid topology under extreme or unseen conditions (e.g., severe winter storms + 100% EV fleet electrification).
+Generates physics-grounded "what-if" EV charging demand scenarios for any intervention (severe winter storm, mass fleet electrification, etc.) and hands off the results as NumPy tensors to the rest of the team.
 
 ---
 
-## 📂 Project Structure
+## What This Module Does
 
-```
-EVolvAI/
-├── run.py                          # CLI entry point (mock / train / generate / all)
-├── generative_model/
-│   ├── __init__.py
-│   ├── config.py                   # All hyperparameters and scenario definitions
-│   ├── models.py                   # CausalConv1d, TCN, GenerativeCounterfactualVAE
-│   ├── data_loader.py              # EVDemandDataset + DataLoader factory
-│   ├── train.py                    # Training loop with model checkpoint saving
-│   ├── generate.py                 # Counterfactual scenario generation
-│   └── mock.py                     # Quick mock tensor generator for async handoff
-├── EVolvAI_Training.ipynb          # Self-contained Colab notebook (GPU training)
-├── sector_3_review.md              # Sector 3 literature review
-├── SUJAY.md                        # Original task roadmap
-└── output/                         # Generated at runtime
-    ├── mock_demand_tensor.npy
-    ├── gcvae_model.pt
-    ├── extreme_winter_storm.npy
-    ├── summer_peak.npy
-    └── full_electrification.npy
-```
+Traditional EV demand forecasting (LSTMs, RNNs) maps historical data to a future prediction — one deterministic answer. That's not enough for grid resilience planning, where you need to answer *"what if 100% of ICE vehicles converted to EV during a winter storm?"*
+
+This module does that. It trains a **Variational Autoencoder with Temporal Convolutional Networks** conditioned on a 5-dimensional intervention vector. At inference, you change the vector and get a statistically realistic demand profile you've never seen in the data — a counterfactual.
 
 ---
 
-## 🚀 Quick Start
+## Team Handoff (What You Get)
 
-### Option 1: Google Colab (Recommended for Training)
-1. Upload `EVolvAI_Training.ipynb` to [Google Colab](https://colab.research.google.com).
-2. **Runtime → Change runtime type → T4 GPU**.
-3. Run all cells. The notebook is self-contained.
+Each generated scenario is a `.npy` file in `output/`:
 
-### Option 2: Local CLI (requires `pip install torch numpy`)
+| Spec | Value |
+|---|---|
+| Format | `.npy` (NumPy float32) |
+| Shape | `[24, 50]` — 24 hours × 50 grid nodes |
+| Units | **kW** — active power demand per node per hour |
+| Hour 0 | Midnight → 01:00 (standard time) |
+
+### Loading in your code
+
+```python
+import numpy as np
+
+demand = np.load('output/extreme_winter_storm.npy')  # shape [24, 50]
+# demand[hour, node_index] → kW at that hour for that node
+```
+
+Available scenarios out of the box:
+
+| File | Description |
+|---|---|
+| `extreme_winter_storm.npy` | Severe cold + 2.5× fleet electrification |
+| `summer_peak.npy` | Heat event + 1.5× electrification |
+| `full_electrification.npy` | Normal weather + 3× fleet (full ICE→EV) |
+| `extreme_winter_v2.npy` | Winter storm + 2.5× fleet + weekend traffic |
+| `mock_demand_tensor.npy` | Synthetic placeholder — use this *right now* before training |
+
+---
+
+## Getting Started
+
+**No GPU, no training required for the mock handoff:**
+
 ```bash
-# Generate mock tensor for async handoff
+pip install numpy
 python run.py mock
+# → output/mock_demand_tensor.npy  [24, 50]
+```
 
-# Train the GCD-VAE model
-python run.py train
+**Full pipeline (needs PyTorch):**
 
-# Generate all counterfactual scenarios from a trained model
-python run.py generate
-
-# Run the full pipeline (mock → train → generate)
-python run.py all
+```bash
+pip install -r requirements.txt
+python run.py train     # trains the model
+python run.py generate  # generates all scenario .npy files
 ```
 
 ---
 
-## ⚙️ Configuration
+## Async Handoff Protocol
 
-All hyperparameters, scenario definitions, and output paths are centralized in [`generative_model/config.py`](generative_model/config.py). Key parameters:
+1. **Now:** Use `output/mock_demand_tensor.npy`. Shape and units are identical to the real output — build your code against this today.
+2. **After training:** Replace the mock path with `output/<scenario>.npy`. Zero code changes needed on your end.
+3. **Later:** Optimization team feeds back critical-node bottlenecks → Sujay tightens the latent conditioning to stress-test those specific nodes.
 
-| Parameter | Default | Description |
+### Data integrity rules
+
+- Arrays will never contain `NaN` or `None`.
+- Shape is always `[24, NUM_NODES]`. If `NUM_NODES` changes it will be announced — update one import and you're done.
+- Hour 0 is always midnight standard time.
+
+---
+
+## What This Module Needs From You
+
+| What | From | Format |
 |---|---|---|
-| `NUM_NODES` | 50 | Grid topology nodes |
-| `SEQ_LEN` | 24 | Hours per profile |
-| `LATENT_DIM` | 16 | VAE latent space size |
-| `COND_DIM` | 2 | Condition vector size `[WeatherFlag, EV_Multiplier]` |
-| `EPOCHS` | 10 | Training epochs |
-| `SCENARIOS` | 3 defined | Dict of counterfactual triggers |
+| Grid topology (bus index, node type, transformer kVA) | Lochan | `.json` |
+| Historical charging logs (start, stop, energy kWh, peak kW) | External (Caltech ACN / NREL) | `.csv` or `.parquet` |
+| Hourly weather (temp, precipitation, wind) | External (Open-Meteo) | `.csv` |
 
----
-
-## 🔧 What Has Been Completed (Generative AI & Demand Modeler)
-
-1. **Sector 3 Literature Review** – Justification for Causal ML and conditional VAEs over deterministic forecasting.
-2. **Mock Handoff System** – Immediate `[24, N]` numpy tensor generator to unblock other teams.
-3. **GCD-VAE Architecture** – TCN encoder/decoder with causal convolutions and latent conditioning.
-4. **Remote Training Pipeline** – Google Colab notebook for cloud GPU training.
-
----
-
-## ⏭️ Next Steps for the Pipeline
-
-### For Grid Physics (Akshay) & Optimization (Teammate B)
-
-**You do NOT need to wait for the AI models to finish training.**
-
-1. **Use Mock Data Now:**
-   ```bash
-   python run.py mock
-   ```
-   This creates `output/mock_demand_tensor.npy` — a `[24, 50]` array in kW. Feed this directly into your `pandapower`/`MATPOWER` simulations and optimization algorithms.
-
-2. **Swap to Real AI Output Later:**
-   Once the AI Modeler provides trained scenario tensors (e.g., `output/extreme_winter_storm.npy`), simply replace the mock tensor path in your code. The output shape is identical — **no code changes needed on your end**.
+Place raw files in `data/raw/` and run `python data_pipeline/preprocess.py` once the merge logic is filled in.

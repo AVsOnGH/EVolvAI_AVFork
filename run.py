@@ -23,42 +23,54 @@ def main():
 
     cmd = sys.argv[1].lower()
 
-    if cmd == "mock":
-        from generative_model.mock import save_mock
-        save_mock()
+    try:
+        if cmd == "mock":
+            from generative_core.mock import save_mock
+            save_mock()
 
-    elif cmd == "train":
-        from generative_model.train import train
-        train()
+        elif cmd == "train":
+            from generative_core.train import train
+            train()
 
-    elif cmd == "generate":
-        from generative_model.generate import generate_all_scenarios
-        generate_all_scenarios()
+        elif cmd == "generate":
+            from generative_core.generate import generate_all_scenarios
+            generate_all_scenarios()
 
-    elif cmd == "all":
-        from generative_model.mock import save_mock
-        from generative_model.train import train
-        from generative_model.generate import generate_all_scenarios
+        elif cmd == "all":
+            from generative_core.mock import save_mock
+            from generative_core.train import train
+            from generative_core.generate import generate_all_scenarios
 
-        print("=" * 60)
-        print("  STEP 1/3 – Mock Output for Async Handoff")
-        print("=" * 60)
-        save_mock()
+            print("=" * 60)
+            print("  STEP 1/3 – Mock Output for Async Handoff")
+            print("=" * 60)
+            save_mock()
 
-        print("\n" + "=" * 60)
-        print("  STEP 2/3 – Training GCD-VAE")
-        print("=" * 60)
-        model, device = train()
+            print("\n" + "=" * 60)
+            print("  STEP 2/3 – Training GCD-VAE")
+            print("=" * 60)
+            model, device = train()
 
-        print("\n" + "=" * 60)
-        print("  STEP 3/3 – Generating Counterfactual Scenarios")
-        print("=" * 60)
-        generate_all_scenarios(model=model, device=device)
+            print("\n" + "=" * 60)
+            print("  STEP 3/3 – Generating Counterfactual Scenarios")
+            print("=" * 60)
+            generate_all_scenarios(model=model, device=device)
 
-        print("\n✅ Full pipeline complete. Check output/ for results.")
+            print("\n✅ Full pipeline complete. Check output/ for results.")
 
-    else:
-        _usage()
+        else:
+            _usage()
+
+    except FileNotFoundError as e:
+        print(f"\n❌ Error: {e}", file=sys.stderr)
+        sys.exit(1)
+    except ImportError as e:
+        print(f"\n❌ Missing dependency: {e}", file=sys.stderr)
+        print("   Install with: pip install -r requirements.txt", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"\n❌ Unexpected error: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
