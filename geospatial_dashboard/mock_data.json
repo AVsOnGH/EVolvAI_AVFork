@@ -1,0 +1,301 @@
+{
+    "nodes": [
+        {
+            "node_id": 1,
+            "lat": 17.3850,
+            "lng": 78.4867,
+            "charger_count": 4,
+            "transformer_overload": false,
+            "gini_score": 0.22,
+            "zone": "central"
+        },
+        {
+            "node_id": 2,
+            "lat": 17.3920,
+            "lng": 78.4780,
+            "charger_count": 2,
+            "transformer_overload": false,
+            "gini_score": 0.31,
+            "zone": "central"
+        },
+        {
+            "node_id": 3,
+            "lat": 17.3990,
+            "lng": 78.4700,
+            "charger_count": 0,
+            "transformer_overload": true,
+            "gini_score": 0.71,
+            "zone": "north"
+        },
+        {
+            "node_id": 4,
+            "lat": 17.4060,
+            "lng": 78.4620,
+            "charger_count": 5,
+            "transformer_overload": false,
+            "gini_score": 0.19,
+            "zone": "north"
+        },
+        {
+            "node_id": 5,
+            "lat": 17.4130,
+            "lng": 78.4540,
+            "charger_count": 1,
+            "transformer_overload": false,
+            "gini_score": 0.55,
+            "zone": "north"
+        },
+        {
+            "node_id": 6,
+            "lat": 17.4200,
+            "lng": 78.4460,
+            "charger_count": 3,
+            "transformer_overload": false,
+            "gini_score": 0.28,
+            "zone": "north"
+        },
+        {
+            "node_id": 7,
+            "lat": 17.4270,
+            "lng": 78.4380,
+            "charger_count": 0,
+            "transformer_overload": true,
+            "gini_score": 0.78,
+            "zone": "north"
+        },
+        {
+            "node_id": 8,
+            "lat": 17.4340,
+            "lng": 78.4300,
+            "charger_count": 6,
+            "transformer_overload": false,
+            "gini_score": 0.15,
+            "zone": "northwest"
+        },
+        {
+            "node_id": 9,
+            "lat": 17.4410,
+            "lng": 78.4220,
+            "charger_count": 0,
+            "transformer_overload": false,
+            "gini_score": 0.62,
+            "zone": "northwest"
+        },
+        {
+            "node_id": 10,
+            "lat": 17.4480,
+            "lng": 78.4140,
+            "charger_count": 2,
+            "transformer_overload": false,
+            "gini_score": 0.41,
+            "zone": "northwest"
+        },
+        {
+            "node_id": 11,
+            "lat": 17.4550,
+            "lng": 78.4060,
+            "charger_count": 1,
+            "transformer_overload": true,
+            "gini_score": 0.69,
+            "zone": "northwest"
+        },
+        {
+            "node_id": 12,
+            "lat": 17.4480,
+            "lng": 78.4300,
+            "charger_count": 4,
+            "transformer_overload": false,
+            "gini_score": 0.24,
+            "zone": "northwest"
+        },
+        {
+            "node_id": 13,
+            "lat": 17.4550,
+            "lng": 78.4380,
+            "charger_count": 0,
+            "transformer_overload": true,
+            "gini_score": 0.82,
+            "zone": "north"
+        },
+        {
+            "node_id": 14,
+            "lat": 17.4620,
+            "lng": 78.4460,
+            "charger_count": 3,
+            "transformer_overload": false,
+            "gini_score": 0.33,
+            "zone": "north"
+        },
+        {
+            "node_id": 15,
+            "lat": 17.4690,
+            "lng": 78.4540,
+            "charger_count": 2,
+            "transformer_overload": false,
+            "gini_score": 0.47,
+            "zone": "north"
+        },
+        {
+            "node_id": 16,
+            "lat": 17.4760,
+            "lng": 78.4620,
+            "charger_count": 5,
+            "transformer_overload": false,
+            "gini_score": 0.18,
+            "zone": "northeast"
+        },
+        {
+            "node_id": 17,
+            "lat": 17.4830,
+            "lng": 78.4700,
+            "charger_count": 0,
+            "transformer_overload": true,
+            "gini_score": 0.76,
+            "zone": "northeast"
+        },
+        {
+            "node_id": 18,
+            "lat": 17.4900,
+            "lng": 78.4780,
+            "charger_count": 1,
+            "transformer_overload": false,
+            "gini_score": 0.53,
+            "zone": "northeast"
+        },
+        {
+            "node_id": 19,
+            "lat": 17.3780,
+            "lng": 78.4950,
+            "charger_count": 3,
+            "transformer_overload": false,
+            "gini_score": 0.37,
+            "zone": "east"
+        },
+        {
+            "node_id": 20,
+            "lat": 17.3710,
+            "lng": 78.5030,
+            "charger_count": 4,
+            "transformer_overload": false,
+            "gini_score": 0.26,
+            "zone": "east"
+        },
+        {
+            "node_id": 21,
+            "lat": 17.3640,
+            "lng": 78.5110,
+            "charger_count": 0,
+            "transformer_overload": true,
+            "gini_score": 0.85,
+            "zone": "east"
+        },
+        {
+            "node_id": 22,
+            "lat": 17.3570,
+            "lng": 78.5190,
+            "charger_count": 2,
+            "transformer_overload": false,
+            "gini_score": 0.43,
+            "zone": "southeast"
+        },
+        {
+            "node_id": 23,
+            "lat": 17.3500,
+            "lng": 78.5270,
+            "charger_count": 1,
+            "transformer_overload": false,
+            "gini_score": 0.58,
+            "zone": "southeast"
+        },
+        {
+            "node_id": 24,
+            "lat": 17.3640,
+            "lng": 78.4950,
+            "charger_count": 6,
+            "transformer_overload": false,
+            "gini_score": 0.13,
+            "zone": "east"
+        },
+        {
+            "node_id": 25,
+            "lat": 17.3570,
+            "lng": 78.4870,
+            "charger_count": 0,
+            "transformer_overload": true,
+            "gini_score": 0.79,
+            "zone": "south"
+        },
+        {
+            "node_id": 26,
+            "lat": 17.3500,
+            "lng": 78.4790,
+            "charger_count": 3,
+            "transformer_overload": false,
+            "gini_score": 0.30,
+            "zone": "south"
+        },
+        {
+            "node_id": 27,
+            "lat": 17.3430,
+            "lng": 78.4710,
+            "charger_count": 2,
+            "transformer_overload": false,
+            "gini_score": 0.45,
+            "zone": "south"
+        },
+        {
+            "node_id": 28,
+            "lat": 17.3360,
+            "lng": 78.4630,
+            "charger_count": 4,
+            "transformer_overload": false,
+            "gini_score": 0.21,
+            "zone": "south"
+        },
+        {
+            "node_id": 29,
+            "lat": 17.3290,
+            "lng": 78.4550,
+            "charger_count": 0,
+            "transformer_overload": true,
+            "gini_score": 0.88,
+            "zone": "southwest"
+        },
+        {
+            "node_id": 30,
+            "lat": 17.3780,
+            "lng": 78.4710,
+            "charger_count": 1,
+            "transformer_overload": false,
+            "gini_score": 0.50,
+            "zone": "west"
+        },
+        {
+            "node_id": 31,
+            "lat": 17.3710,
+            "lng": 78.4630,
+            "charger_count": 3,
+            "transformer_overload": false,
+            "gini_score": 0.35,
+            "zone": "west"
+        },
+        {
+            "node_id": 32,
+            "lat": 17.3640,
+            "lng": 78.4550,
+            "charger_count": 5,
+            "transformer_overload": false,
+            "gini_score": 0.17,
+            "zone": "west"
+        },
+        {
+            "node_id": 33,
+            "lat": 17.3570,
+            "lng": 78.4470,
+            "charger_count": 0,
+            "transformer_overload": true,
+            "gini_score": 0.91,
+            "zone": "southwest"
+        }
+    ]
+}

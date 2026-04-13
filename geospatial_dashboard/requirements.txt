@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+streamlit
+streamlit-folium
+folium
+requests
+numpy
+pandas
